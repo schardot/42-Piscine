@@ -1,56 +1,98 @@
 #include <unistd.h>
 
-void    ft_print_addr(unsigned long long addr);
-long    ft_powerof(long base, int power);
+void	ft_print_addr(unsigned long long addr);
+long	ft_powerof(long base, int power);
+void	ft_print_hex(char *chunk, unsigned int size);
+void	ft_putchar(char c);
 
-void    *ft_print_memory(void *addr, unsigned int size)
+void	*ft_print_memory(void *addr, unsigned int size)
 {
-    ft_print_addr((unsigned long long) addr);
-    write (1, ": ", 2);
+	char	*chunk;
 
-   
-    return (addr);
+	chunk = addr;
+	while (size > 0)
+	{
+		ft_print_addr((unsigned long long) chunk);
+		if (size < 16)
+		{
+			ft_print_hex(chunk, size);
+			write(1, chunk, size);
+			size = 0;
+		}
+		else
+		{
+			ft_print_hex(chunk, 16);
+			write(1, chunk, 16);
+			chunk += 16;
+			size -= 16;
+		}
+		ft_putchar('\n');
+	}
+	return (addr);
 }
-void    ft_print_addr(unsigned long long addr)
-{
-    unsigned long long temp;
-    int i;
-    char hex = "0123456789abcdef"
-    i = 0;
-    while (addr > 0)
-    {
-        temp = addr;
-        while (temp > 16)
-        {
-            temp /= 16;
-            i ++;
-        }
-        write(1, hex[temp], sizeof(hex[temp]));
-        addr = addr - (temp * ft_powerof(16, i));
-    }
-}
-long    ft_powerof(long base, int power)
-{
-    int i;
 
-    i = 1;
-    while (i < power)
-    {
-        base *= base;
-    }
-    return(base)
-}
-void    ft_print_hex(char *base, char *addr)
+void	ft_print_addr(unsigned long long addr)
 {
-    int i;
+	char	*hex;
+	char	array[16];
+	int		i;
 
-    i = 0;
-    while (addr[i] != '\0')
-    {
-        
-    }
+	hex = "0123456789abcdef";
+	i = -1;
+	while (i++ < 16)
+		array[i] = '0';
+	i --;
+	while (i--, addr >= 16)
+	{
+		array[i] = hex[addr % 16];
+		addr /= 16;
+	}
+	array[i] = hex[addr];
+	write(1, array, 16);
+	write (1, ": ", 2);
 }
-int main() {
-    printf("Size of a memory address: %zu bytes\n", sizeof(void *));
-    return 0;
+
+long	ft_powerof(long base, int power)
+{
+	int	i;
+
+	i = 1;
+	while (i < power)
+	{
+		base *= base;
+		i ++;
+	}
+	return (base);
+}
+
+void	ft_print_hex(char *chunk, unsigned int size)
+{
+	int             aux;
+	unsigned int	i;
+	char            *base;
+
+	base = "0123456789abcdef";
+	i = 0;
+	while (i < size)
+	{
+		ft_putchar((chunk[i] / 16) + '0');
+		aux = (chunk[i] % 16);
+		ft_putchar(base[aux]);
+		if (i % 2 != 0)
+			ft_putchar(' ');
+		i ++;
+	}
+	while (i < 16)
+	{
+		ft_putchar(' ');
+		ft_putchar(' ');
+		if (i % 2 != 0)
+			ft_putchar(' ');
+		i ++;
+	}
+}
+
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
 }
