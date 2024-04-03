@@ -2,7 +2,7 @@
 #include <limits.h>
 
 int ft_checkbase(char *base);
-int isnegative(int nbr);
+long isnegative(int nbr);
 int ft_strcmp(char *s1, char *s2);
 long ft_expo(long n, long powerof);
 
@@ -17,7 +17,7 @@ void ft_putnbr_base(int nbr, char *base)
     b = ft_checkbase(base);
     if (b <= 1)
         return;
-    number = (long)isnegative(nbr);
+    number = isnegative(nbr);
     if (number == 0)
     {
         write(1, &base[0], 1);
@@ -25,6 +25,7 @@ void ft_putnbr_base(int nbr, char *base)
     }
     while (b > 0 && number >= ft_expo(b, round))
         round++;
+    round --;
     while (round >= 0)
     {
         div = number / (ft_expo(b, round));
@@ -49,7 +50,7 @@ int ft_checkbase(char *b)
     return (i);
 }
 
-int isnegative(int nbr)
+long isnegative(int nbr)
 {
     long number;
 
@@ -57,7 +58,7 @@ int isnegative(int nbr)
     if (number == INT_MIN)
     {
         write(1, "-", 1);
-        number = -(long)INT_MIN;
+        number = -(long long)INT_MIN;
     }
     else if (number < 0)
     {
@@ -96,7 +97,7 @@ long ft_expo(long n, long powerof)
     return (number);
 }
 
-int main(void)
-{
-    ft_putnbr_base(214748364, "01");
-}
+// int main(void)
+// {
+//     ft_putnbr_base(-12, "01");
+// }
