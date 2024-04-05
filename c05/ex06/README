@@ -1,0 +1,11 @@
+Turn-in directory : ex06/
+Files to turn in : ft_is_prime.c
+Allowed functions : None
+
+• Create a function that returns 1 if the number given as a parameter is a prime
+number, and 0 if it isn’t.
+• Here’s how it should be prototyped :
+
+int ft_is_prime(int nb);
+
+0 and 1 are not prime numbers.
