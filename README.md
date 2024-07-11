@@ -25,3 +25,7 @@ Feel free to browse through the exercises and use them as a reference. If you sp
 For any questions or further information, feel free to contact me.
 
 Happy coding! 😊
+
+ ![unmaintained](http://unmaintained.tech/badge.svg)
+
+
